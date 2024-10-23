@@ -34,7 +34,7 @@ public class Handler {
             jsonNode = objectMapper.readTree(json);
             log.info("Successfully parsed JSON");
         } catch (Exception e) {
-            log.error("Error parsing JSON", e);
+            log.error("Error parsing JSON: {}", e.getMessage());
             return;
         }
         serializedJson = recognizeAndHandleType(jsonNode);

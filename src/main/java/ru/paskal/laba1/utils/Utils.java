@@ -4,11 +4,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 import org.apache.commons.text.StringEscapeUtils;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Utils {
+
+    public static InputStream getResourceAsStream(String resourcePath) {
+        return Utils.class.getClassLoader().getResourceAsStream(resourcePath);
+    }
+
+    public static boolean isResourceUrl(String url) {
+        return url.startsWith("res://");
+    }
+
+    public static String getResourcePath(String url) {
+        return url.replace("res://", "");
+    }
+
     public static String getShortJsonStr(JsonNode jsonNode) {
         var jsonStr = jsonNode.toPrettyString();
         return jsonStr.length() > 300 ? jsonStr.substring(0, 300) + "..." : jsonStr;
@@ -21,6 +35,9 @@ public class Utils {
     public static String toPlainUrl(String url) {
         if (url.startsWith("https://")) {
             url = url.substring(8);
+        }
+        if (url.startsWith("res://")) {
+            url = url.substring(6);
         }
         if (url.endsWith(".json")) {
             url = url.substring(0, url.length() - 5);

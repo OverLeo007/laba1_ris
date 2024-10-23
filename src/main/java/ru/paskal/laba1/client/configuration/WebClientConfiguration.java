@@ -54,10 +54,7 @@ public class WebClientConfiguration {
 
     @PostConstruct
     public void setup() {
-        Hooks.onErrorDropped(e -> {
-            // Custom error handling logic
-            log.error(e.getMessage());
-        });
+        Hooks.onErrorDropped(e -> log.error(e.getMessage()));
     }
 
 }
